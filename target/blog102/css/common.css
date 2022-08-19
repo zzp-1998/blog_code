@@ -1,0 +1,133 @@
+/* 放置一些页面都会用到的样式 */
+
+/* 此操作取消浏览器的默认样式： */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 给整个页面添加背景： */
+html,body{
+    height: 100%;
+}
+
+body{
+    /* 这里路径：因为common是在css目录里，而css和image是同级的，所以需要.. */
+    background-image: url(../image/粉红猪猪背景.jpeg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+/* 设置导航栏样式： */
+.nav{
+    /* 设置宽度： */
+    width: 100%;
+     /* 设置高度： */
+    height: 50px;
+    /* r-红色；g-绿色；b-蓝色；a-透明度 */
+    background-color: rgba(51, 51, 51, 0.5);
+    /* 文字颜色： */
+    color: white;
+    /* 导航栏内部的内容都是一行排列，所以使用弹性布局 flex */
+    display: flex;
+    /* 设置子元素垂直居中： */
+    align-items: center;
+}
+
+/* 设置导航栏里的图片样式： */
+.nav img{
+    width: 40px;
+    height: 40px;
+    /* 设置圆角弧度，当为50%时，是圆形： */
+    border-radius: 50%;
+    /* 设置图片与左侧的外边距： */
+    margin-left: 30px;
+    /* 设置图片与右侧的外边距： */
+    margin-right: 10px;
+}
+/* 设置那个空白元素： */
+.nav .spacer{
+    /* 相对于父元素，宽度设为父元素的70%： */
+    width: 78%;
+}
+
+/* 设置导航栏的a标签样式： */
+.nav a{
+    color: white;
+    /* 取消下划线： */
+    text-decoration: none;
+    /* 设置a标签之间的内边距：0 为上下边距；10px为左右边距： */
+    padding: 0 10px;
+}
+
+
+/* 以下为版心相关样式： */
+.container{
+    /* 设置版心宽度： */
+    width: 1000px;
+    /* 设置版心高度，为浏览器页面高度减去导航栏高度（使用calc()函数）： */
+    height: calc(100% - 50px);
+
+    /* 将版心设为水平居中： */
+    margin: 0 auto;
+
+    /* 设置弹性布局，因为left 和right 都是块级元素，默认占一行 */
+    display: flex;
+    /* 设置container里的两个元素为左右分开 */
+    justify-content: space-between;
+}
+/* 设置left个人信息的样式： */
+.container .left{
+    height: 100%;
+    width: 200px;
+}
+/* 设置right内容信息的样式： */
+.container .right{
+    height: 100%;
+    width: 790px;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+
+    /* 将页面设置为上下延申 */
+    overflow: auto;
+}
+
+/* 下面设置card部分样式： */
+.card{
+    /* 设置背景颜色： */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* 设置圆角弧度： */
+    border-radius: 10px;
+    /* 通过设置内边距，达到使头像居中效果： */
+    padding: 30px;
+}
+/* 设置card里的图片： */
+.card img{
+    width: 140px;
+    height: 140px;
+    /* 将其设为圆形： */
+    border-radius: 50%;
+}
+/* 设置h3标签： */
+.card h3{
+    text-align: center;
+    padding: 10px;
+}
+/* 设置card里的a标签： */
+.card a{
+    /* 将a标签转换为块级元素，因为很多行内元素边距不生效： */
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: grey;
+    padding: 10px;
+}
+/* 设置“文章，分类”标签： */
+.card .counter{
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+}

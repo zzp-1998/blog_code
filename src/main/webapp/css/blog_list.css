@@ -1,0 +1,57 @@
+/* 这里专门写和博客列表页相关样式： */
+
+.blog{
+    width: 100%;
+    padding: 20px;
+}
+/* 设置博客标题： */
+.blog .title{
+    /* 设置标题水平居中： */
+    text-align: center;
+    /* 设置标题字体大小： */
+    font-size: 22px;
+    /* 设置字体是否加粗： */
+    font-weight: bold;
+    padding: 10px;
+}
+/* 设置博客日期： */
+.blog .date{
+    text-align: center;
+    color: rgb(189, 8, 77);
+    /* 设置内边距，上下10px，左右0： */
+    padding: 10px 0;
+}
+
+.blog .desc{
+    /* 设置首行缩进2字符： */
+    text-indent: 2em;
+}
+/* 设置 查看全文 按钮： */
+.blog a{
+    /* 设为块级元素，方便设置尺寸： */
+    display: block;
+    width: 140px;
+    height: 40px;
+    /* 将该元素设为水平居中： */
+    margin: 13px auto;
+    /* 设置边框： */
+    border: 2px rgb(238, 87, 87) solid;
+    border-radius: 20px;
+
+    /* 设置字体颜色： */
+    color: rgb(238, 87, 87);
+    /* 设置字体垂直居中： */
+    line-height: 40px;
+    /* 设置字体水平居中： */
+    text-align: center;
+    /* 取消下划线： */
+    text-decoration: none;
+
+    /* 如果想让变化有一个渐变，可以加上过渡效果： */
+    transition: all 1s;
+}
+/* 设置将鼠标放在a标签上时，出现的样式： */
+.blog a:hover{
+    background-color: tomato;
+    color: white;
+}

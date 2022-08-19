@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客详情页</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/blog-detail.css">
+
+    <!-- 引入 editor.md 的依赖： -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+    <!-- 这里是导航栏 -->
+    <div class="nav">
+        <img src="image/小猪头像.png" alt="">
+        <span>我的博客系统</span>
+        <!-- 空白元素，用来占位置！ -->
+        <div class="spacer"></div>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="logout">退出</a>
+    </div>
+
+    <!-- 这里的container作为页面的版心： -->
+    <div class="container">
+        <!-- 左侧个人信息： -->
+        <div class="left">
+            <div class="card">
+                <img src="image/张卫健.png" alt="">
+                <h3>夏开开</h3>
+                <a href="#">github 地址</a>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="counter">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧内容信息： -->
+        <div class="right">
+            <!-- 使用这个div来包裹住整个博客的内容详情 -->
+            <div class="blog-content">
+                <!-- 博客标题 -->
+                <h3></h3>
+                <!-- 博客的时间 -->
+                <div class="date"></div>
+                <!-- 正文 -->
+                <div id="content" style="opacity: 80%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function getBlogDetail(){
+            $.ajax({
+                type:'get',
+                // location.search 拿到了形如“?vlogId=5” 这样的内容
+                url:'blog' + location.search,
+                success: function(body){
+                    // 根据body里的内容来构造html页面：
+
+                    // 1、先构造博客的标题：
+                    let h3 = document.querySelector(".blog-content>h3");
+                    h3.innerHTML = body.title;
+                    // 2、构造博客发布时间：
+                    let dateDiv = document.querySelector(".date");
+                    dateDiv.innerHTML = body.postTime;
+                    // 3、构造博客正文内容：
+
+                    // 如果直接把content设为innerHTML，此时展示在页面上的是原始的markdown字符串
+                    // 咱们需要的是渲染后，带格式的效果，所以不用下面方法，
+                    // let content = document.querySelector("#content");
+                    // content.innerHTML = body.content;
+
+                    // 第一个参数对应id=content的html标签，渲染后得到的html片段就会被放到这个标签下
+                    editormd.markdownToHTML('content',{
+                        markdown: body.content
+                    });
+                }
+            });
+        }
+
+        getBlogDetail();
+
+        
+
+        //加上一个逻辑，通过GET /login 这个接口来获取当前的登陆状态：
+        function getUserInfo(pageName){
+            $.ajax({
+                type: 'get',
+                url: 'login',
+                success: function(body){
+                // 判定此处的body是不是一个有效的user对象（userId 是否为非0）
+                if(body.userId && body.userId > 0){
+                    // 此时登陆成功，不做处理
+                    console.log('当前登陆成功！用户名：'+body.username);
+
+                    // // 根据当前用户登录的情况，把用户名设置到html页面上：
+                    // if(pageName == 'blog_list.html'){
+                    // changeUserName(body.username);
+                    // }
+
+                    // 在getUserInfo 的回调函数中，来调用获取作者信息
+                    getAuthorInfo(body);
+                }else{
+                    // 登录失败：
+                    // 让前端页面跳转到login.html
+                    alert('当前尚未登录，请登录后再访问！')
+                    location.assign('blog_login.html');
+                }
+                },
+                error: function(){
+                    alert('当前尚未登录，请登录后再访问！')
+                    location.assign('blog_login.html');
+                }
+            });
+        }
+    
+        // 判定用户的登录状态：
+        getUserInfo('blog_detail.html');
+        
+        // 从服务器获取一下当前博客的作者信息，并显示在界面上
+        // 这里的参数user就是刚才从服务器拿到的当前登录用户信息
+        function getAuthorInfo(user){
+            $.ajax({
+                type: 'get',
+                url: 'authorInfo'+location.search,
+                success: function(body){
+                    // 此处的body，就是服务器返回的User对象，是文章的作者信息
+                    if(body.username){
+                        // 若响应中的username存在，就把这个值设置到页面上：
+                        changeUserName(body.username);
+
+                        if(body.username == user.username){
+                            // 若作者和当前登录用户是同一个人，则显示“删除按钮”
+                            let navDiv = document.querySelector('.nav');
+                            let a = document.createElement('a');
+                            a.innerHTML = '删除';
+                            // 此时点击删除时，期望构造一个形如：blogDelete?blogId=6 这样的请求
+                            a.href = 'blogDelete'+location.search;
+                            navDiv.appendChild(a);
+                        }
+                    }else{
+                        console.log('获取作者信息失败！' + body.season);
+                    }
+                }
+            });
+        }
+
+        function changeUserName(username){
+            let h3 = document.querySelector('.card>h3');
+            h3.innerHTML = username;
+        }
+    </script>
+</body>
+</html>

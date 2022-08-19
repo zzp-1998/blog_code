@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客列表</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/blog_list.css">
+</head>
+<body>
+    <!-- 这里是导航栏 -->
+    <div class="nav">
+        <img src="image/皮卡丘1.jpg" alt="">
+        <span>我的博客系统</span>
+        <!-- 空白元素，用来占位置！ -->
+        <div class="spacer"></div>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写博客</a>
+        <a href="logout">退出</a>
+    </div>
+
+    <!-- 这里的contaier作为页面的版心： -->
+    <div class="container">
+        <!-- 左侧个人信息： -->
+        <div class="left">
+            <div class="card">
+                <img src="image/皮卡丘2.jpg" alt="">
+                <h3></h3>
+                <a href="#">github 地址</a>
+                <div class="counter">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="counter">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+        </div>
+        <!-- 右侧内容信息： -->
+        <div class="right">
+            <!-- 每一个 .blog都对应着一个博客： -->
+            <!-- <div class="blog">
+                <div class="title">
+                    我的第一篇博客：
+                </div>
+                <div class="date">
+                    2022.05.06
+                </div>
+                <div class="desc">
+                    从今天起，我要认真敲代码！Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vel provident delectus odit exercitationem quis pariatur quia sapiente soluta assumenda consequuntur laboriosam officia repudiandae, placeat quasi, dolores harum eaque nemo officiis.
+                </div>
+                <a href="./blog_detail.html">
+                    点击查看全文 &gt;&gt;
+                </a>
+            </div> -->
+        </div>
+    </div>
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        // 在页面加载的时候，通过ajax给服务器发送数据，获取到博客列表信息，并显示在界面上
+        function getBloglist(){
+            $.ajax({
+                type:'get',
+                url:'blog',
+                success:function(body){
+                    // 获取到的body内容就是一个js对象数组，每个元素就是一个js对象
+                    // 1、先把 .right 里原有的数据清空
+                    let rightDiv = document.querySelector('.right');
+                    rightDiv.innerHTML = '';
+                    // 2、遍历body，构造出一个个blogDiv
+                    for(let blog of body){
+                        let blogDiv = document.createElement('div');
+                        blogDiv.className = 'blog';
+                        // 构造标题的div：
+                        let titleDiv = document.createElement('div');
+                        titleDiv.className = 'title';
+                        titleDiv.innerHTML = blog.title;
+                        blogDiv.appendChild(titleDiv);
+                        // 构造发布时间的div：
+                        let dateDiv = document.createElement('div');
+                        dateDiv.className = 'date';
+                        dateDiv.innerHTML = blog.postTime;
+                        blogDiv.appendChild(dateDiv);
+                        // 构造博客摘要的div：
+                        let descDiv = document.createElement('div');
+                        descDiv.className = 'desc';
+                        descDiv.innerHTML = blog.content;
+                        blogDiv.appendChild(descDiv);
+                        // 构造查看全文：
+                        let a = document.createElement('a');
+                        a.innerHTML = '点击查看全文>>';
+                        // 此处希望点击之后能够跳转到博客详情页，跳转过程需要告知服务器要访问的是哪个博客的详情页：
+                        a.href = 'blog_detail.html?blogId=' + blog.blogId;
+                        blogDiv.appendChild(a);
+
+                        // 最后把blogDiv挂到dom树上：
+                        rightDiv.appendChild(blogDiv);
+                    }
+                },
+                error:function(){
+                    alert('获取博客列表失败！');
+                }
+            });
+        }
+
+        getBloglist();
+
+    </script>
+
+    <!-- 在这里引入common.js文件，就可以执行到里面的代码，也就进行了登录状态的检测了 -->
+    <script src="js/common.js"></script>
+
+    <script>
+        getUserInfo('blog_list.html');
+    </script>
+</body>
+</html>

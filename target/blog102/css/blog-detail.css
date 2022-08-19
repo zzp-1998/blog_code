@@ -1,0 +1,24 @@
+/* 给博客详情页使用的样式文件： */
+
+
+.blog-content{
+    padding: 30px;
+}
+/* 设置博客标题： */
+.blog-content h3{
+    /* 设置文本居中对齐： */
+    text-align: center;
+}
+/* 设置博客时间： */
+.blog-content .date{
+    text-align: center;
+    color: rgb(189, 8, 77);
+    /* 设置边距：上下20px，左右0； */
+    padding: 20px 0;
+}
+
+.blog-content p{
+    /* 首行缩进2字符： */
+    text-indent: 2em;
+    padding: 10px 0;
+}

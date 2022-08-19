@@ -1,0 +1,58 @@
+/* 这是博客编辑页专用的样式文件： */
+
+.blog-edit-container{
+    width: 1000px;
+    height: calc(100% - 50px);
+    /* 设置该元素为水平居中 */
+    margin: 0 auto;
+}
+
+.blog-edit-container .title{
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.blog-edit-container .title #title{
+    width: 900px;
+    height: 40px;
+
+    border-radius: 10px;
+    border: none;
+    outline: none;
+
+    font-size: 22px;
+    line-height: 40px;
+    padding-left: 10px;
+
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.blog-edit-container .title #submit{
+    width: 95px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(231, 76, 89);
+
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+/* 设置“发布文章”按钮的点击效果： */
+.blog-edit-container .title #submit:active{
+    background-color: rgb(201, 11, 4);
+}
+
+#editor{
+    border-radius: 10px;
+    /* opacity 也是设置元素背景颜色的透明度
+    但是background-color只是针对当前元素进行设置，不会影响到子元素
+    而 opacity会影响到子元素，具备“继承性”，即：
+    给最外面元素设置了透明度，里面的元素也会一起变透明~
+     */
+    opacity: 90%;
+}

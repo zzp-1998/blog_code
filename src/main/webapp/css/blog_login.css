@@ -1,0 +1,81 @@
+/* 登陆页面的专用样式文件 */
+
+.login-container{
+    width: 100%;
+    height: calc(100% - 50px);
+
+    /* 需要让里面的登录框垂直水平居中： */
+    display: flex;
+    /* 垂直居中 */
+    align-items: center;
+    /* 水平居中 */
+    justify-content: center;
+}
+/* 设置登录框： */
+.login-dialog{
+    width: 400px;
+    height: 350px;
+
+    background-color: rgba(255, 255, 255, 0.9);
+    /* 设置矩形的圆角弧度： */
+    border-radius: 10px;
+}
+/* 设置登录框里的“登录”标题： */
+.login-dialog h3{
+    text-align: center;
+    padding: 50px;
+}
+/* 设置“row”行： */
+.login-dialog .row{
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-dialog .row span{
+    /* 将其设为块级元素，方便设置尺寸： */
+    display: block;
+    width: 100px;
+    font-weight: 700;
+}
+
+/* 设置两个输入框： */
+#username,#password{
+    width: 200px;
+    height: 40px;
+    /* 设置输入框里的文字大小： */
+    font-size: 22px;
+    /* 使输入款里的文字垂直居中： */
+    line-height: 40px;
+    /* 让文字与左边有10px的距离： */
+    padding-left: 10px;
+
+    border-radius: 10px;
+    /* 消除边框： */
+    /* border: none; */
+    /* 消除轮廓线： */
+    outline: none;
+}
+/* 设置提交按钮的样式： */
+.row #submit{
+    width: 300px;
+    height: 50px;
+    /* 与上面元素的边距： */
+    margin-top: 45px;
+
+    border-radius: 10px;
+    border: none;
+    outline: none;
+
+    color: white;
+    background-color: rgb(212, 53, 67);
+
+    font-size: 15px;
+}
+/* 设置提交按钮点击时的样式： */
+.row #submit:active{
+    background-color: rgb(184, 45, 10);
+}
